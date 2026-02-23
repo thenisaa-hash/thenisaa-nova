@@ -1,0 +1,3 @@
+higgsfield-client
+requests
+python-dotenv
