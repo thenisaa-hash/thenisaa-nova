@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary | Nova Furnishing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nova: {
+              50:  '#fdf8f2',
+              100: '#f7ead9',
+              200: '#edd4ad',
+              300: '#e0b87a',
+              400: '#d49a4e',
+              500: '#c47d2e',
+              600: '#a96224',
+              700: '#8a4b1f',
+              800: '#6f3c1e',
+              900: '#5a321c',
+            }
+          },
+          fontFamily: {
+            serif: ['Georgia', 'Cambria', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .letter-anchor { scroll-margin-top: 6rem; }
+    .term-item { transition: background 0.15s ease; }
+    .term-item.hidden { display: none; }
+    .letter-group.hidden { display: none; }
+    #no-results { display: none; }
+    #no-results.visible { display: block; }
+  </style>
+</head>
+<body class="bg-nova-50 text-gray-800 font-sans min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-nova-200 sticky top-0 z-20 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div>
+        <a href="#" class="text-xl font-serif font-bold text-nova-700 tracking-wide hover:text-nova-900 transition-colors">
+          Nova Furnishing
+        </a>
+        <span class="text-nova-400 mx-2">|</span>
+        <span class="text-sm text-gray-500 uppercase tracking-widest">Glossary</span>
+      </div>
+      <!-- Search -->
+      <div class="relative w-full sm:w-72">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search terms..."
+          class="w-full pl-9 pr-4 py-2 rounded-lg border border-nova-200 bg-nova-50 text-sm focus:outline-none focus:ring-2 focus:ring-nova-400 focus:border-transparent placeholder-gray-400"
+        />
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-nova-700 to-nova-900 text-white py-14 px-4 text-center">
+    <h1 class="text-4xl sm:text-5xl font-serif font-bold mb-3 tracking-tight">Furniture Glossary</h1>
+    <p class="text-nova-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+      A comprehensive reference of furniture, home decor, and interior design terminology —
+      from classic styles to materials and construction techniques.
+    </p>
+  </section>
+
+  <main class="max-w-5xl mx-auto px-4 py-10">
+
+    <!-- A-Z Navigation -->
+    <nav id="az-nav" class="flex flex-wrap gap-1 justify-center mb-10">
+      <!-- Populated by JS -->
+    </nav>
+
+    <!-- No results -->
+    <div id="no-results" class="text-center py-20">
+      <svg class="w-12 h-12 mx-auto text-nova-300 mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <p class="text-gray-500 text-lg">No terms found for "<span id="no-results-query" class="font-semibold text-nova-700"></span>"</p>
+      <p class="text-gray-400 text-sm mt-1">Try a different spelling or browse by letter.</p>
+    </div>
+
+    <!-- Glossary Content -->
+    <div id="glossary-container" class="space-y-10">
+      <!-- Populated by JS -->
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-nova-200 bg-white mt-16 py-8 text-center text-sm text-gray-400">
+    <p>&copy; <span id="year"></span> Nova Furnishing. All rights reserved.</p>
+    <p class="mt-1">Crafting beautiful spaces, one piece at a time.</p>
+  </footer>
+
+  <script>
+    // ─── Glossary Data ──────────────────────────────────────────────
+    const glossaryData = [
+      // A
+      { term: "Accent Chair",       letter: "A", definition: "A standalone chair used to add visual interest, color, or texture to a room without matching the main seating ensemble." },
+      { term: "Apron",              letter: "A", definition: "A horizontal board positioned just below a tabletop or chair seat that connects and reinforces the legs, sometimes decoratively carved." },
+      { term: "Armoire",            letter: "A", definition: "A large, freestanding upright cabinet with doors, originally used for storing armor and weapons, now used for clothing or media storage." },
+      { term: "Armchair",           letter: "A", definition: "A chair with side supports (arms) for resting the elbows and forearms, designed for comfort in sitting." },
+      { term: "Aesthetic Movement", letter: "A", definition: "A late 19th-century design philosophy emphasizing 'art for art's sake,' characterized by Japanese-inspired motifs, ebonized wood, and decorative ornamentation." },
+
+      // B
+      { term: "Barrister Bookcase", letter: "B", definition: "A modular stacking bookcase with individual glass-fronted sections, originally used by lawyers to transport books." },
+      { term: "Bench",              letter: "B", definition: "A long seat for multiple people, with or without a back, used in entryways, dining rooms, or at the foot of a bed." },
+      { term: "Bergère",            letter: "B", definition: "An upholstered French armchair with an enclosed wooden frame, cushioned seat, and often a loose seat cushion — popular since the 18th century." },
+      { term: "Bookcase",           letter: "B", definition: "A piece of furniture with horizontal shelves, used for storing and displaying books and objects." },
+      { term: "Buffet",             letter: "B", definition: "A long, low cabinet used in dining rooms for storing dishes and serving food; also called a sideboard." },
+      { term: "Bun Foot",           letter: "B", definition: "A rounded, flattened spherical furniture foot resembling a bun, common in 17th-century English and Dutch furniture." },
+      { term: "Butler's Tray",      letter: "B", definition: "A rectangular tray on folding legs, used as a portable serving surface or side table." },
+
+      // C
+      { term: "Cabriole Leg",       letter: "C", definition: "An S-curved furniture leg that curves outward at the knee and inward at the ankle, ending in a decorative foot — a hallmark of Queen Anne and Chippendale styles." },
+      { term: "Chaise Lounge",      letter: "C", definition: "An upholstered reclining chair long enough to support the legs, allowing the sitter to stretch out horizontally." },
+      { term: "Chest of Drawers",   letter: "C", definition: "A piece of furniture with multiple horizontal drawers stacked one above another, used for clothing storage." },
+      { term: "Chippendale",        letter: "C", definition: "An 18th-century English furniture style named after cabinetmaker Thomas Chippendale, known for elaborate carved ornament, ball-and-claw feet, and Gothic or Chinese influences." },
+      { term: "Console Table",      letter: "C", definition: "A narrow table fixed against a wall or supported by brackets, used in entryways and hallways for decorative display." },
+      { term: "Credenza",           letter: "C", definition: "A low sideboard with doors and drawers, originally used to taste food for poison before serving nobility, now a storage piece in dining or living rooms." },
+      { term: "Claw-and-Ball Foot", letter: "C", definition: "A decorative furniture foot depicting a claw (or talon) grasping a ball, typical of Chippendale and Queen Anne styles." },
+
+      // D
+      { term: "Davenport",          letter: "D", definition: "1) A large upholstered sofa; 2) A small writing desk with a hinged top and side drawers, popular in Victorian England." },
+      { term: "Daybed",             letter: "D", definition: "A piece of furniture that functions as both a sofa and a bed, featuring a reclining back and side rails." },
+      { term: "Demilune",           letter: "D", definition: "A half-moon or semicircular table, console, or cabinet, from the French for 'half moon.'" },
+      { term: "Distressing",        letter: "D", definition: "A finishing technique applied to furniture to simulate age and wear — including dents, scratches, and paint effects — giving a vintage appearance." },
+      { term: "Dovetail Joint",     letter: "D", definition: "A classic woodworking joint with interlocking trapezoidal cuts (resembling a dove's tail) that provides strong resistance to pulling apart, used in drawer construction." },
+      { term: "Drop-Leaf Table",    letter: "D", definition: "A table with one or more hinged sections (leaves) that can be folded down to reduce the table's size when not in use." },
+
+      // E
+      { term: "Etagere",            letter: "E", definition: "An open-shelved display unit used to show decorative objects, books, or plants, often with ornate brackets." },
+      { term: "Escutcheon",         letter: "E", definition: "A decorative plate or shield-shaped fitting surrounding a keyhole or used as a decorative accent on furniture hardware." },
+      { term: "Empire Style",       letter: "E", definition: "A neoclassical furniture style from early 19th-century France, characterized by bold geometric forms, Egyptian motifs, and rich materials like mahogany and gilded bronze." },
+
+      // F
+      { term: "Fauteuil",           letter: "F", definition: "A French open-armed upholstered armchair with padded armrests, originating in the 17th century and a staple of French court furniture." },
+      { term: "Finial",             letter: "F", definition: "A decorative ornamental detail at the top of a bedpost, cabinet, lamp, or curtain rod, often in the shape of a ball, urn, or carved motif." },
+      { term: "Footstool",          letter: "F", definition: "A small, low stool used to support the feet while seated, or as a step stool near tall furniture." },
+      { term: "French Polish",      letter: "F", definition: "A high-gloss wood finish achieved by applying many thin coats of shellac dissolved in alcohol, producing a deep, mirror-like sheen." },
+
+      // G
+      { term: "Gateleg Table",      letter: "G", definition: "A table with drop leaves supported by hinged legs that swing out like a gate, allowing the table to be expanded or folded flat for storage." },
+      { term: "Gilding",            letter: "G", definition: "The application of thin gold leaf or gold paint to surfaces to add a luxurious golden finish, widely used in baroque and rococo furniture." },
+      { term: "Grain",              letter: "G", definition: "The natural pattern of lines, texture, and fiber direction visible on the surface of cut wood, influencing both aesthetics and structural strength." },
+
+      // H
+      { term: "Hardwood",           letter: "H", definition: "Wood from broad-leaved (deciduous) trees such as oak, walnut, mahogany, and cherry. Generally denser and more durable than softwood, preferred for quality furniture." },
+      { term: "Highboy",            letter: "H", definition: "A tall chest of drawers in two stacked sections, the lower section often on cabriole legs, popular in 18th-century American colonial furniture." },
+      { term: "Hutch",              letter: "H", definition: "A two-part storage unit combining a lower cabinet or buffet with an upper open or glass-fronted shelving section, used in dining rooms." },
+
+      // I
+      { term: "Inlay",              letter: "I", definition: "A decorative technique where contrasting materials (different woods, metal, shell, bone) are set into recessed areas of a furniture surface to create patterns or images." },
+
+      // J
+      { term: "Japanning",          letter: "J", definition: "A European imitation of East Asian lacquer work, applying layers of black or colored varnish with gilded decoration, popular in 17th–18th century furniture." },
+      { term: "Joinery",            letter: "J", definition: "The craft of connecting pieces of wood using joints such as mortise-and-tenon, dovetail, or dowel joints, forming the structural framework of furniture." },
+
+      // K
+      { term: "Klismos",            letter: "K", definition: "An ancient Greek chair form with a curved backrest (klismos rail) and outward-splaying saber legs, widely revived in neoclassical and Regency design." },
+      { term: "Knockdown Furniture", letter: "K", definition: "Furniture designed to be assembled and disassembled easily using hardware connectors, without tools or adhesives — common in flat-pack furniture." },
+
+      // L
+      { term: "Lacquer",            letter: "L", definition: "A hard, glossy surface coating derived from the sap of the lacquer tree (or synthetic resins), applied in thin layers to protect and decorate furniture." },
+      { term: "Loveseat",           letter: "L", definition: "A small sofa designed for two people, also called a two-seater, ideal for smaller living spaces or as a companion piece to a larger sofa." },
+
+      // M
+      { term: "Marquetry",          letter: "M", definition: "A decorative veneer technique where pieces of thin wood (or other materials) are assembled like a puzzle to form intricate patterns, pictures, or floral designs on furniture surfaces." },
+      { term: "MCM (Mid-Century Modern)", letter: "M", definition: "A design movement from roughly 1945–1969 characterized by clean lines, organic shapes, minimal ornamentation, and the use of materials like molded plywood, fiberglass, and aluminum." },
+      { term: "Mortise and Tenon",  letter: "M", definition: "A classic carpentry joint where a projecting tongue (tenon) fits snugly into a corresponding hole (mortise) in another piece, creating a strong structural connection." },
+
+      // N
+      { term: "Nailhead Trim",      letter: "N", definition: "Decorative upholstery hardware — individual or strip nail heads with domed or flat heads — used to outline and embellish upholstered furniture edges and seams." },
+      { term: "Nightstand",         letter: "N", definition: "A small bedside table used to hold a lamp, alarm clock, books, and other items within easy reach while in bed; also called a bedside table." },
+
+      // O
+      { term: "Ormolu",             letter: "O", definition: "Gilded bronze or brass mounts and decorations applied to high-end French furniture, especially in the Louis XV and Louis XVI periods." },
+      { term: "Ottoman",            letter: "O", definition: "A padded, upholstered seat without a back or arms, used as a footrest, extra seating, or a coffee table surface." },
+
+      // P
+      { term: "Parsons Table",      letter: "P", definition: "A minimalist table characterized by legs that are the same width as the tabletop thickness, creating a clean, boxy silhouette — named after the Parsons School of Design." },
+      { term: "Patina",             letter: "P", definition: "A surface sheen, color change, or texture that develops on furniture over time through aging, use, and oxidation — often considered desirable in antiques." },
+      { term: "Pediment",           letter: "P", definition: "A decorative triangular or curved architectural element crowning the top of a cabinet, bookcase, or clock — borrowed from classical Greek and Roman architecture." },
+      { term: "Pembroke Table",     letter: "P", definition: "A small drop-leaf table with short leaves and a drawer, versatile enough for breakfast, writing, or as a side table." },
+      { term: "Plinth",             letter: "P", definition: "A flat, square base on which a piece of furniture, column, or decorative object stands." },
+
+      // Q
+      { term: "Queen Anne Style",   letter: "Q", definition: "An early 18th-century English furniture style featuring graceful cabriole legs, pad feet, shell carvings, and restrained curves — emphasizing elegance over heavy ornamentation." },
+
+      // R
+      { term: "Rattan",             letter: "R", definition: "A flexible palm vine used in weaving furniture frames and surfaces; lightweight, durable, and popular in tropical and bohemian interior styles." },
+      { term: "Recliner",           letter: "R", definition: "An armchair or sofa with an adjustable back and extendable footrest, allowing the sitter to recline to various angles for comfort." },
+      { term: "Reclaimed Wood",     letter: "R", definition: "Lumber salvaged from old buildings, barns, or demolished structures and repurposed for furniture. Prized for its character, patina, and sustainable sourcing." },
+
+      // S
+      { term: "Secretary Desk",     letter: "S", definition: "A writing desk with a hinged writing surface that folds out, combined with shelving or cabinet sections above and drawers below." },
+      { term: "Settee",             letter: "S", definition: "A small upholstered sofa or bench with a back and arms, designed for two or more people — lighter and less formal than a full sofa." },
+      { term: "Sideboard",          letter: "S", definition: "A long, low piece of dining room furniture used for storage and serving, typically with drawers, cupboards, and an open top surface." },
+      { term: "Slipcover",          letter: "S", definition: "A removable, washable fabric cover designed to fit over upholstered furniture to protect it or change its appearance." },
+      { term: "Sofa",               letter: "S", definition: "An upholstered seat with a back and arms, long enough for multiple people to sit on simultaneously; the centerpiece of most living rooms." },
+      { term: "Softwood",           letter: "S", definition: "Wood from coniferous (evergreen) trees such as pine, fir, and cedar. Generally lighter and less expensive than hardwood; used for painted furniture and structural framing." },
+
+      // T
+      { term: "Tambour",            letter: "T", definition: "A flexible sliding closure made of thin wooden slats glued to a canvas backing, used on roll-top desks and cabinet doors." },
+      { term: "Trestle Table",      letter: "T", definition: "A table with a flat top supported by two A-frame or sawhorse-style trestle bases, easily assembled and disassembled." },
+      { term: "Tufting",            letter: "T", definition: "An upholstery technique where buttons or stitches pull through the fabric and padding at regular intervals, creating a dimpled, patterned surface — common in Chesterfield sofas." },
+      { term: "Turnery",            letter: "T", definition: "The craft of shaping wood on a lathe to create decorative round or symmetrical elements such as legs, spindles, and balusters." },
+
+      // U
+      { term: "Upholstery",         letter: "U", definition: "The craft and materials — fabric, foam, padding, springs, and webbing — used to cover and cushion seats, backs, and arms of furniture." },
+
+      // V
+      { term: "Veneer",             letter: "V", definition: "A thin slice of attractive wood (or other material) bonded over a less expensive substrate to create the appearance of solid wood with greater stability and visual appeal." },
+      { term: "Victorian Style",    letter: "V", definition: "A 19th-century design era (during Queen Victoria's reign) noted for heavy ornamentation, dark woods like mahogany and walnut, tufted upholstery, and eclectic historical motifs." },
+
+      // W
+      { term: "Wainscoting",        letter: "W", definition: "Decorative wood paneling applied to the lower portion of interior walls, typically paired with furniture for a coordinated, classic look." },
+      { term: "Windsor Chair",      letter: "W", definition: "A spindle-back wooden chair with a solid saddle seat and splayed legs, originating in 18th-century England — one of the most enduring chair designs in history." },
+      { term: "Writing Desk",       letter: "W", definition: "A flat-surfaced desk designed primarily for writing, often with small drawers or compartments for storing stationery." },
+
+      // X
+      { term: "X-Base",             letter: "X", definition: "A furniture base or stool support shaped like an X when viewed from the side, derived from the Roman curule chair and popular in neoclassical and Empire styles." },
+
+      // Y
+      { term: "Yoke Back",          letter: "Y", definition: "A chair back splat shaped like a curved yoke (the crosspiece on a harness), characteristic of Chinese Chippendale and Queen Anne chairs." },
+
+      // Z
+      { term: "Zeitgeist",          letter: "Z", definition: "In interior design, the 'spirit of the time' — the prevailing aesthetic sensibility of an era that influences furniture styles, color palettes, and decor trends." },
+    ];
+
+    // ─── Build UI ────────────────────────────────────────────────────
+    const letters = [...new Set(glossaryData.map(d => d.letter))].sort();
+    const container = document.getElementById('glossary-container');
+    const azNav    = document.getElementById('az-nav');
+    const searchInput = document.getElementById('search-input');
+    const noResults   = document.getElementById('no-results');
+    const noResultsQ  = document.getElementById('no-results-query');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Build A-Z nav buttons
+    letters.forEach(letter => {
+      const btn = document.createElement('a');
+      btn.href = `#letter-${letter}`;
+      btn.textContent = letter;
+      btn.dataset.letter = letter;
+      btn.className = 'az-btn w-8 h-8 flex items-center justify-center rounded font-semibold text-sm border border-nova-200 text-nova-700 bg-white hover:bg-nova-600 hover:text-white hover:border-nova-600 transition-colors';
+      azNav.appendChild(btn);
+    });
+
+    // Build letter groups
+    letters.forEach(letter => {
+      const group = document.createElement('section');
+      group.id = `letter-${letter}`;
+      group.dataset.letter = letter;
+      group.className = 'letter-group letter-anchor';
+
+      // Letter heading
+      const heading = document.createElement('div');
+      heading.className = 'flex items-center gap-3 mb-4';
+      heading.innerHTML = `
+        <span class="w-11 h-11 flex items-center justify-center rounded-full bg-nova-700 text-white text-xl font-serif font-bold shadow">${letter}</span>
+        <div class="flex-1 h-px bg-nova-200"></div>
+      `;
+      group.appendChild(heading);
+
+      // Terms grid
+      const grid = document.createElement('div');
+      grid.className = 'grid gap-4 sm:grid-cols-2';
+
+      const terms = glossaryData.filter(d => d.letter === letter);
+      terms.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'term-item bg-white rounded-xl border border-nova-100 p-5 shadow-sm hover:shadow-md hover:border-nova-300 transition-all';
+        card.dataset.term = item.term.toLowerCase();
+        card.dataset.definition = item.definition.toLowerCase();
+        card.innerHTML = `
+          <h3 class="font-serif font-semibold text-nova-800 text-lg mb-1 leading-tight">${item.term}</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">${item.definition}</p>
+        `;
+        grid.appendChild(card);
+      });
+
+      group.appendChild(grid);
+      container.appendChild(group);
+    });
+
+    // ─── Search ──────────────────────────────────────────────────────
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (!query) {
+        // Show everything
+        document.querySelectorAll('.letter-group').forEach(g => g.classList.remove('hidden'));
+        document.querySelectorAll('.term-item').forEach(t => t.classList.remove('hidden'));
+        document.querySelectorAll('.az-btn').forEach(b => b.classList.remove('opacity-30'));
+        noResults.classList.remove('visible');
+        return;
+      }
+
+      let anyVisible = false;
+      const visibleLetters = new Set();
+
+      document.querySelectorAll('.letter-group').forEach(group => {
+        let groupHasVisible = false;
+        group.querySelectorAll('.term-item').forEach(card => {
+          const matches = card.dataset.term.includes(query) || card.dataset.definition.includes(query);
+          card.classList.toggle('hidden', !matches);
+          if (matches) { groupHasVisible = true; anyVisible = true; }
+        });
+        group.classList.toggle('hidden', !groupHasVisible);
+        if (groupHasVisible) visibleLetters.add(group.dataset.letter);
+      });
+
+      // Dim A-Z nav buttons with no results
+      document.querySelectorAll('.az-btn').forEach(btn => {
+        btn.classList.toggle('opacity-30', !visibleLetters.has(btn.dataset.letter));
+      });
+
+      noResultsQ.textContent = searchInput.value.trim();
+      noResults.classList.toggle('visible', !anyVisible);
+    });
+  </script>
+</body>
+</html>
