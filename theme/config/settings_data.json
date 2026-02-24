@@ -1,0 +1,71 @@
+{
+  "current": {
+    "colors_background_1": "#ffffff",
+    "colors_background_2": "#f5f0eb",
+    "colors_text": "#1a1a1a",
+    "colors_accent_1": "#b08d57",
+    "colors_accent_2": "#8b6f47",
+    "colors_outline_button_labels": "#1a1a1a",
+    "colors_solid_button_labels": "#ffffff",
+    "colors_card_background": "#ffffff",
+    "colors_card_text": "#1a1a1a",
+    "colors_badge_background": "#b08d57",
+    "colors_badge_foreground": "#ffffff",
+
+    "type_header_font": "assistant_n4",
+    "type_header_base_size": 36,
+    "type_header_scale": 1.2,
+    "type_body_font": "assistant_n4",
+    "type_body_base_size": 16,
+
+    "layout_horizontal_spacing_factor": 100,
+    "layout_vertical_spacing_factor": 100,
+    "layout_page_width": 1400,
+    "layout_content_width": 1200,
+
+    "section_corner_radius": 0,
+    "buttons_border_width": 1,
+    "buttons_border_radius": 4,
+    "inputs_border_width": 1,
+    "inputs_border_radius": 4,
+    "card_border_width": 0,
+    "card_border_radius": 0,
+    "badge_border_radius": 4,
+
+    "header_logo_position": "left",
+    "header_sticky": true,
+    "header_background_color": "#ffffff",
+    "header_menu_type": "mega",
+
+    "cart_type": "drawer",
+
+    "announcement_bar_background_color": "#1a1a1a",
+    "announcement_bar_text_color": "#ffffff",
+
+    "currency_code_enabled": false,
+    "predictive_search_enabled": true,
+    "predictive_search_show_vendor": false,
+    "predictive_search_show_price": true,
+
+    "product_card_show_quick_add": true,
+    "product_card_show_rating": false,
+    "product_card_image_ratio": "portrait",
+    "product_card_text_alignment": "left",
+    "product_card_show_collection_card": false,
+    "product_card_show_secondary_image": true,
+    "product_card_show_quantity_selector": false,
+    "product_card_style": "standard",
+
+    "collection_filtering_layout": "sidebar",
+    "collection_products_per_page": 24,
+    "collection_default_sort": "best-selling",
+
+    "social_facebook_link": "",
+    "social_instagram_link": "",
+    "social_tiktok_link": "",
+    "social_whatsapp": "",
+
+    "favicon": ""
+  },
+  "presets": {}
+}

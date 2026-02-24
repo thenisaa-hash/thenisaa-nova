@@ -1,0 +1,334 @@
+{
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free delivery on orders above $500 | Visit our showroom: 11:30am – 9:00pm daily",
+            "link": "/pages/locate-us"
+          }
+        }
+      },
+      "block_order": ["announcement-1"],
+      "settings": {
+        "background_color": "#1a1a1a",
+        "text_color": "#ffffff",
+        "auto_rotate": true,
+        "rotate_every": 5
+      }
+    },
+
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "heading": "Crafted for Modern Singapore Homes",
+            "subheading": "Explore our exclusive collection of sofas, beds, dining sets and more",
+            "button_label": "Shop Now",
+            "button_link": "/collections/all",
+            "button_style": "primary",
+            "text_alignment": "center",
+            "overlay_opacity": 40,
+            "text_color": "#ffffff"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "heading": "New Sofa Collections Arrived",
+            "subheading": "Fabric, leather & recliner sofas in modular and chaise configurations",
+            "button_label": "View Sofas",
+            "button_link": "/collections/sofas",
+            "button_style": "primary",
+            "text_alignment": "center",
+            "overlay_opacity": 40,
+            "text_color": "#ffffff"
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "settings": {
+            "image": "",
+            "heading": "Bedroom Made Beautiful",
+            "subheading": "Complete bed frames and mattress collections for every style",
+            "button_label": "View Beds",
+            "button_link": "/collections/beds-bedframes",
+            "button_style": "primary",
+            "text_alignment": "center",
+            "overlay_opacity": 40,
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": ["slide-1", "slide-2", "slide-3"],
+      "settings": {
+        "layout": "full-width",
+        "slide_height": "adapt",
+        "auto_rotate": true,
+        "rotate_every": 6,
+        "show_arrows": true,
+        "show_dots": true
+      }
+    },
+
+    "featured-collections-grid": {
+      "type": "collection-list",
+      "blocks": {
+        "col-sofas": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sofas",
+            "image": "",
+            "overlay_opacity": 20,
+            "heading": "Sofas"
+          }
+        },
+        "col-beds": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "beds-bedframes",
+            "image": "",
+            "overlay_opacity": 20,
+            "heading": "Beds & Bedframes"
+          }
+        },
+        "col-dining": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "dining-tables",
+            "image": "",
+            "overlay_opacity": 20,
+            "heading": "Dining Tables"
+          }
+        },
+        "col-coffee": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "coffee-tables",
+            "image": "",
+            "overlay_opacity": 20,
+            "heading": "Coffee Tables"
+          }
+        },
+        "col-tv": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "tv-consoles",
+            "image": "",
+            "overlay_opacity": 20,
+            "heading": "TV Consoles"
+          }
+        },
+        "col-wardrobes": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "wardrobes-storage",
+            "image": "",
+            "overlay_opacity": 20,
+            "heading": "Wardrobes"
+          }
+        }
+      },
+      "block_order": [
+        "col-sofas", "col-beds", "col-dining",
+        "col-coffee", "col-tv", "col-wardrobes"
+      ],
+      "settings": {
+        "title": "Shop by Category",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "columns_mobile": 2,
+        "show_view_all": false,
+        "padding_top": 64,
+        "padding_bottom": 36
+      }
+    },
+
+    "value-propositions": {
+      "type": "multicolumn",
+      "blocks": {
+        "prop-1": {
+          "type": "column",
+          "settings": {
+            "title": "Free Delivery",
+            "text": "Complimentary island-wide delivery on orders above $500.",
+            "icon": "truck"
+          }
+        },
+        "prop-2": {
+          "type": "column",
+          "settings": {
+            "title": "Quality Assured",
+            "text": "Every piece is hand-selected for durability and comfort.",
+            "icon": "star"
+          }
+        },
+        "prop-3": {
+          "type": "column",
+          "settings": {
+            "title": "Professional Assembly",
+            "text": "Our expert team assembles your furniture safely in your home.",
+            "icon": "tools"
+          }
+        },
+        "prop-4": {
+          "type": "column",
+          "settings": {
+            "title": "1-Year Warranty",
+            "text": "All products come with a manufacturer's structural warranty.",
+            "icon": "shield"
+          }
+        }
+      },
+      "block_order": ["prop-1", "prop-2", "prop-3", "prop-4"],
+      "settings": {
+        "title": "Why Choose Us",
+        "heading_size": "h3",
+        "image_width": "icon",
+        "button_label": "",
+        "button_link": "",
+        "background_style": "secondary",
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+
+    "new-arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "New Arrivals",
+        "heading_size": "h2",
+        "description": "Explore our latest additions – freshly curated furniture for modern Singapore homes.",
+        "collection": "new-arrivals",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "show_view_all": true,
+        "view_all_style": "link",
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "padding_top": 48,
+        "padding_bottom": 36,
+        "color_scheme": "background-1"
+      }
+    },
+
+    "promo-banner": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "",
+        "image_ratio": "adapt",
+        "image_position": "left",
+        "heading": "Customise to Your Style",
+        "heading_size": "h2",
+        "text": "Choose from a wide range of colours, fabrics, and configurations. Visit our showroom or book an appointment to explore customisation options.",
+        "button_label": "Book a Showroom Visit",
+        "button_link": "/pages/locate-us",
+        "button_style": "primary",
+        "text_alignment": "left",
+        "background_color": "#f5f0eb",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Bestsellers",
+        "heading_size": "h2",
+        "description": "Our most-loved pieces, chosen by Singapore homeowners.",
+        "collection": "sofas",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "show_view_all": true,
+        "view_all_style": "button",
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "padding_top": 48,
+        "padding_bottom": 36,
+        "color_scheme": "background-1"
+      }
+    },
+
+    "gallery-section": {
+      "type": "image-gallery",
+      "blocks": {
+        "gal-1": { "type": "image", "settings": { "image": "", "link": "/collections/sofas", "alt": "Living room sofa" } },
+        "gal-2": { "type": "image", "settings": { "image": "", "link": "/collections/dining-tables", "alt": "Dining set" } },
+        "gal-3": { "type": "image", "settings": { "image": "", "link": "/collections/beds-bedframes", "alt": "Bedroom setup" } },
+        "gal-4": { "type": "image", "settings": { "image": "", "link": "/collections/coffee-tables", "alt": "Coffee table" } },
+        "gal-5": { "type": "image", "settings": { "image": "", "link": "/pages/gallery", "alt": "Showroom gallery" } },
+        "gal-6": { "type": "image", "settings": { "image": "", "link": "/pages/gallery", "alt": "Home inspiration" } }
+      },
+      "block_order": ["gal-1", "gal-2", "gal-3", "gal-4", "gal-5", "gal-6"],
+      "settings": {
+        "title": "Gallery",
+        "heading_size": "h2",
+        "columns_desktop": 3,
+        "columns_mobile": 2,
+        "button_label": "View Full Gallery",
+        "button_link": "/pages/gallery",
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "color_scheme": "background-2"
+      }
+    },
+
+    "showroom-cta": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "",
+        "image_ratio": "adapt",
+        "image_position": "right",
+        "heading": "Visit Our Showroom",
+        "heading_size": "h2",
+        "text": "Experience our full range of furniture in person. Our friendly consultants are on hand to help you find the perfect pieces for your home.\n\nOpen daily: 11:30am – 9:00pm",
+        "button_label": "Get Directions",
+        "button_link": "/pages/locate-us",
+        "button_style": "secondary",
+        "text_alignment": "left",
+        "background_color": "#ffffff",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+
+    "newsletter": {
+      "type": "email-signup",
+      "settings": {
+        "heading": "Be the First to Know",
+        "subheading": "Subscribe for new collection launches, exclusive offers, and home inspiration.",
+        "placeholder": "Enter your email address",
+        "button_label": "Subscribe",
+        "background_style": "accent",
+        "background_color": "#1a1a1a",
+        "text_color": "#ffffff",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "slideshow",
+    "featured-collections-grid",
+    "value-propositions",
+    "new-arrivals",
+    "promo-banner",
+    "bestsellers",
+    "gallery-section",
+    "showroom-cta",
+    "newsletter"
+  ]
+}
