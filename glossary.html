@@ -3,334 +3,779 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glossary | Nova Furnishing</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            nova: {
-              50:  '#fdf8f2',
-              100: '#f7ead9',
-              200: '#edd4ad',
-              300: '#e0b87a',
-              400: '#d49a4e',
-              500: '#c47d2e',
-              600: '#a96224',
-              700: '#8a4b1f',
-              800: '#6f3c1e',
-              900: '#5a321c',
-            }
-          },
-          fontFamily: {
-            serif: ['Georgia', 'Cambria', 'serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <title>Furniture Glossary | X'clusive Home Singapore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    .letter-anchor { scroll-margin-top: 6rem; }
-    .term-item { transition: background 0.15s ease; }
-    .term-item.hidden { display: none; }
-    .letter-group.hidden { display: none; }
-    #no-results { display: none; }
+    /* ── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #ffffff;
+      color: #111111;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Nav ──────────────────────────────────────────────────── */
+    #nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
+      height: 60px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      color: #111111;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .nav-links a:hover { border-color: #111111; }
+    .nav-links a.sale { color: #c8000a; }
+    .nav-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #25d366;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .nav-wa:hover { background: #1fb85a; }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero {
+      background: #111111;
+      padding: 72px 24px 64px;
+      text-align: center;
+    }
+    .hero-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #666666;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 52px);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 15px;
+      color: #888888;
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+    .hero-stats {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .hero-stat {
+      padding: 14px 28px;
+      text-align: center;
+      border-right: 1px solid #2a2a2a;
+    }
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat-num {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      color: #555555;
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Filter Bar ───────────────────────────────────────────── */
+    #filter-bar {
+      position: sticky;
+      top: 60px;
+      z-index: 20;
+      background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .filter-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .search-wrap { position: relative; flex-shrink: 0; }
+    .search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: #aaaaaa;
+      pointer-events: none;
+    }
+    #search-input {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      width: 260px;
+      padding: 9px 14px 9px 36px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      background: #fafafa;
+      color: #111111;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    #search-input::placeholder { color: #aaaaaa; }
+    #search-input:focus { border-color: #111111; background: #ffffff; }
+    #az-nav { display: flex; flex-wrap: wrap; gap: 4px; }
+    .az-btn {
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      border: 1px solid #e5e5e5;
+      background: #ffffff;
+      color: #333333;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .az-btn:hover { background: #f3f3f3; border-color: #cccccc; }
+    .az-btn.active { background: #111111; color: #ffffff; border-color: #111111; }
+    .az-btn.dimmed { opacity: 0.25; pointer-events: none; }
+    @media (max-width: 640px) {
+      #search-input { width: 100%; }
+      .filter-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ── Main Body ────────────────────────────────────────────── */
+    .glossary-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 52px 24px 88px;
+    }
+
+    /* ── Letter Group ─────────────────────────────────────────── */
+    .letter-group { scroll-margin-top: 124px; }
+    .letter-group + .letter-group { margin-top: 52px; }
+    .letter-group.hidden { display: none !important; }
+    .letter-heading {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .letter-char {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111111;
+      min-width: 24px;
+      line-height: 1;
+    }
+    .letter-rule { flex: 1; height: 1px; background: #eeeeee; }
+    .letter-tally {
+      font-size: 11px;
+      color: #bbbbbb;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Term Cards ───────────────────────────────────────────── */
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 14px;
+    }
+    .term-card {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      padding: 18px 20px 20px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .term-card:hover {
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+      border-color: #cccccc;
+    }
+    .term-card.hidden { display: none !important; }
+    .term-tag {
+      display: inline-block;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999999;
+      background: #f5f5f5;
+      border-radius: 3px;
+      padding: 2px 7px;
+      margin-bottom: 8px;
+    }
+    .term-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 7px;
+      line-height: 1.3;
+    }
+    .term-def {
+      font-size: 13px;
+      color: #666666;
+      line-height: 1.75;
+    }
+
+    /* ── No results ───────────────────────────────────────────── */
+    #no-results {
+      display: none;
+      text-align: center;
+      padding: 80px 0;
+    }
     #no-results.visible { display: block; }
+    #no-results svg { color: #dddddd; margin: 0 auto 16px; display: block; }
+    #no-results p { font-size: 15px; color: #444444; font-weight: 500; }
+    #no-results span { color: #111111; }
+    #no-results small { display: block; margin-top: 6px; font-size: 12px; color: #aaaaaa; }
+
+    /* ── Why Section ──────────────────────────────────────────── */
+    .why-section {
+      background: #f8f8f8;
+      border-top: 1px solid #e8e8e8;
+      padding: 64px 24px;
+    }
+    .why-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #999999;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .section-heading {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      color: #111111;
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .section-sub {
+      font-size: 14px;
+      color: #777777;
+      text-align: center;
+      max-width: 460px;
+      margin: 0 auto 44px;
+      line-height: 1.7;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 44px;
+    }
+    .why-card {
+      background: #ffffff;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      padding: 22px 20px;
+    }
+    .why-icon {
+      width: 38px;
+      height: 38px;
+      background: #111111;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .why-icon svg { color: #ffffff; }
+    .why-card h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111111;
+      margin-bottom: 6px;
+    }
+    .why-card p { font-size: 12.5px; color: #777777; line-height: 1.7; }
+
+    /* ── WhatsApp CTA ─────────────────────────────────────────── */
+    .wa-section {
+      background: #111111;
+      padding: 64px 24px;
+      text-align: center;
+    }
+    .wa-section .section-label { color: #444444; }
+    .wa-section .section-heading { color: #ffffff; }
+    .wa-section .section-sub { color: #666666; }
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #25d366;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .btn-wa:hover { background: #1fb85a; }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 4px;
+      border: 1px solid #333333;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: #666666; background: #1a1a1a; }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    footer {
+      background: #0d0d0d;
+      border-top: 1px solid #1c1c1c;
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .footer-sub { font-size: 12px; color: #555555; }
+    .footer-copy { font-size: 11px; color: #3a3a3a; margin-top: 4px; }
   </style>
 </head>
-<body class="bg-nova-50 text-gray-800 font-sans min-h-screen">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white border-b border-nova-200 sticky top-0 z-20 shadow-sm">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-      <div>
-        <a href="#" class="text-xl font-serif font-bold text-nova-700 tracking-wide hover:text-nova-900 transition-colors">
-          Nova Furnishing
-        </a>
-        <span class="text-nova-400 mx-2">|</span>
-        <span class="text-sm text-gray-500 uppercase tracking-widest">Glossary</span>
-      </div>
-      <!-- Search -->
-      <div class="relative w-full sm:w-72">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+  <!-- ══ NAVIGATION ══════════════════════════════════════════════ -->
+  <header id="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="https://xclusivehome.sg">X'clusive Home</a>
+      <nav class="nav-links">
+        <a href="https://xclusivehome.sg/sofa-collection">Sofas</a>
+        <a href="https://xclusivehome.sg/collections/all">Wardrobes</a>
+        <a href="https://xclusivehome.sg/collections/all">Dining</a>
+        <a href="https://xclusivehome.sg/collections/all">Bedroom</a>
+        <a href="https://xclusivehome.sg/collections/all">Living</a>
+        <a href="https://xclusivehome.sg/sale" class="sale">Sale</a>
+      </nav>
+      <a class="nav-wa" href="https://wa.me/6591234567" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.557 4.126 1.526 5.855L0 24l6.324-1.496A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-4.992-1.366l-.357-.214-3.755.887.936-3.651-.234-.374A9.818 9.818 0 1112 21.818z"/>
         </svg>
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Search terms..."
-          class="w-full pl-9 pr-4 py-2 rounded-lg border border-nova-200 bg-nova-50 text-sm focus:outline-none focus:ring-2 focus:ring-nova-400 focus:border-transparent placeholder-gray-400"
-        />
-      </div>
+        WhatsApp Us
+      </a>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="bg-gradient-to-br from-nova-700 to-nova-900 text-white py-14 px-4 text-center">
-    <h1 class="text-4xl sm:text-5xl font-serif font-bold mb-3 tracking-tight">Furniture Glossary</h1>
-    <p class="text-nova-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-      A comprehensive reference of furniture, home decor, and interior design terminology —
-      from classic styles to materials and construction techniques.
-    </p>
+  <!-- ══ HERO ════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <p class="hero-tag">Resource</p>
+    <h1>Furniture Glossary</h1>
+    <p>Understand the terminology behind furniture, materials, and interior design styles — so you can shop and plan with confidence.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num" id="stat-terms">—</div>
+        <div class="hero-stat-label">Terms</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">A–Z</div>
+        <div class="hero-stat-label">Indexed</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" id="stat-cats">—</div>
+        <div class="hero-stat-label">Categories</div>
+      </div>
+    </div>
   </section>
 
-  <main class="max-w-5xl mx-auto px-4 py-10">
+  <!-- ══ FILTER BAR ══════════════════════════════════════════════ -->
+  <div id="filter-bar">
+    <div class="filter-inner">
+      <div class="search-wrap">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input id="search-input" type="text" placeholder="Search a term or material…" autocomplete="off" />
+      </div>
+      <div id="az-nav"></div>
+    </div>
+  </div>
 
-    <!-- A-Z Navigation -->
-    <nav id="az-nav" class="flex flex-wrap gap-1 justify-center mb-10">
-      <!-- Populated by JS -->
-    </nav>
-
-    <!-- No results -->
-    <div id="no-results" class="text-center py-20">
-      <svg class="w-12 h-12 mx-auto text-nova-300 mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+  <!-- ══ GLOSSARY BODY ═══════════════════════════════════════════ -->
+  <main class="glossary-body">
+    <div id="no-results">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
         <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
       </svg>
-      <p class="text-gray-500 text-lg">No terms found for "<span id="no-results-query" class="font-semibold text-nova-700"></span>"</p>
-      <p class="text-gray-400 text-sm mt-1">Try a different spelling or browse by letter.</p>
+      <p>No results for "<span id="no-results-q"></span>"</p>
+      <small>Try a different word, or browse by letter above.</small>
     </div>
-
-    <!-- Glossary Content -->
-    <div id="glossary-container" class="space-y-10">
-      <!-- Populated by JS -->
-    </div>
-
+    <div id="glossary-container"></div>
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-nova-200 bg-white mt-16 py-8 text-center text-sm text-gray-400">
-    <p>&copy; <span id="year"></span> Nova Furnishing. All rights reserved.</p>
-    <p class="mt-1">Crafting beautiful spaces, one piece at a time.</p>
+  <!-- ══ WHY SHOP ════════════════════════════════════════════════ -->
+  <section class="why-section">
+    <div class="why-inner">
+      <p class="section-label">Why X'clusive Home</p>
+      <h2 class="section-heading">Shop with Confidence</h2>
+      <p class="section-sub">Over 1,000 furniture pieces across 3 showrooms islandwide — with expert guidance at every step.</p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Quality Guaranteed</h3>
+          <p>Every piece is carefully selected for materials, craftsmanship, and durability suited to Singapore homes.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h5l2 3v5h-7V8zM5.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
+          </div>
+          <h3>Island-wide Delivery</h3>
+          <p>Fast, reliable delivery and professional setup across Singapore — at no hassle to you.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3>Expert Consultation</h3>
+          <p>Our in-store and WhatsApp consultants help you pick the right piece, material, and configuration for your space.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <h3>Customisable Options</h3>
+          <p>Choose your colour, fabric, size, and layout. Many pieces are customisable to fit your exact home.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHATSAPP CTA ════════════════════════════════════════════ -->
+  <section class="wa-section">
+    <p class="section-label">Have a Question?</p>
+    <h2 class="section-heading" style="margin-bottom:10px;">Not sure which piece is right for you?</h2>
+    <p class="section-sub">Our team is ready to help you find the perfect furniture for your home — just send us a message on WhatsApp.</p>
+    <div class="cta-group">
+      <a class="btn-wa" href="https://wa.me/6591234567" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.557 4.126 1.526 5.855L0 24l6.324-1.496A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-4.992-1.366l-.357-.214-3.755.887.936-3.651-.234-.374A9.818 9.818 0 1112 21.818z"/>
+        </svg>
+        Enquire on WhatsApp
+      </a>
+      <a class="btn-outline" href="https://xclusivehome.sg" target="_blank" rel="noopener">
+        Browse Collection
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+  <footer>
+    <a class="footer-logo" href="https://xclusivehome.sg">X'clusive Home</a>
+    <p class="footer-sub">Singapore's Leading Furniture Store · Jurong East</p>
+    <p class="footer-copy">&copy; <span id="footer-year"></span> X'clusive Home. All rights reserved.</p>
   </footer>
 
+  <!-- ══ SCRIPT ══════════════════════════════════════════════════ -->
   <script>
-    // ─── Glossary Data ──────────────────────────────────────────────
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // ── Glossary Data ─────────────────────────────────────────
     const glossaryData = [
       // A
-      { term: "Accent Chair",       letter: "A", definition: "A standalone chair used to add visual interest, color, or texture to a room without matching the main seating ensemble." },
-      { term: "Apron",              letter: "A", definition: "A horizontal board positioned just below a tabletop or chair seat that connects and reinforces the legs, sometimes decoratively carved." },
-      { term: "Armoire",            letter: "A", definition: "A large, freestanding upright cabinet with doors, originally used for storing armor and weapons, now used for clothing or media storage." },
-      { term: "Armchair",           letter: "A", definition: "A chair with side supports (arms) for resting the elbows and forearms, designed for comfort in sitting." },
-      { term: "Aesthetic Movement", letter: "A", definition: "A late 19th-century design philosophy emphasizing 'art for art's sake,' characterized by Japanese-inspired motifs, ebonized wood, and decorative ornamentation." },
+      { term: "Accent Chair",           letter: "A", cat: "Seating",         def: "A standalone decorative chair used to complement a room's main sofa or seating set. Typically bolder in colour, pattern, or texture — it adds character and visual interest without matching everything else." },
+      { term: "Armoire",                letter: "A", cat: "Storage",         def: "A large freestanding cabinet with hinged doors and interior shelves or hanging rails, used for clothing or linen storage. A traditional alternative to built-in wardrobes." },
+      { term: "Armrest",                letter: "A", cat: "Parts",           def: "The horizontal side supports on a chair or sofa designed to rest the forearms comfortably when seated." },
 
       // B
-      { term: "Barrister Bookcase", letter: "B", definition: "A modular stacking bookcase with individual glass-fronted sections, originally used by lawyers to transport books." },
-      { term: "Bench",              letter: "B", definition: "A long seat for multiple people, with or without a back, used in entryways, dining rooms, or at the foot of a bed." },
-      { term: "Bergère",            letter: "B", definition: "An upholstered French armchair with an enclosed wooden frame, cushioned seat, and often a loose seat cushion — popular since the 18th century." },
-      { term: "Bookcase",           letter: "B", definition: "A piece of furniture with horizontal shelves, used for storing and displaying books and objects." },
-      { term: "Buffet",             letter: "B", definition: "A long, low cabinet used in dining rooms for storing dishes and serving food; also called a sideboard." },
-      { term: "Bun Foot",           letter: "B", definition: "A rounded, flattened spherical furniture foot resembling a bun, common in 17th-century English and Dutch furniture." },
-      { term: "Butler's Tray",      letter: "B", definition: "A rectangular tray on folding legs, used as a portable serving surface or side table." },
+      { term: "Bed Frame",              letter: "B", cat: "Bedroom",         def: "The structural base that holds a mattress off the ground. Available in platform, divan, storage, and upholstered styles — each offering different looks and storage options." },
+      { term: "Bonded Leather",         letter: "B", cat: "Materials",       def: "A budget-friendly leather alternative made by bonding leftover leather scraps and fibres onto a fabric backing. Less durable than genuine leather over time and may peel with heavy use." },
+      { term: "Box Spring",             letter: "B", cat: "Bedroom",         def: "A bed base featuring a rigid frame with internal coil springs, designed to absorb shock and provide additional height and support beneath a mattress." },
+      { term: "Buffet",                 letter: "B", cat: "Dining",          def: "A long, low dining room cabinet with drawers and cupboards for storing crockery, cutlery, and linens. The flat top surface doubles as a serving area when entertaining." },
 
       // C
-      { term: "Cabriole Leg",       letter: "C", definition: "An S-curved furniture leg that curves outward at the knee and inward at the ankle, ending in a decorative foot — a hallmark of Queen Anne and Chippendale styles." },
-      { term: "Chaise Lounge",      letter: "C", definition: "An upholstered reclining chair long enough to support the legs, allowing the sitter to stretch out horizontally." },
-      { term: "Chest of Drawers",   letter: "C", definition: "A piece of furniture with multiple horizontal drawers stacked one above another, used for clothing storage." },
-      { term: "Chippendale",        letter: "C", definition: "An 18th-century English furniture style named after cabinetmaker Thomas Chippendale, known for elaborate carved ornament, ball-and-claw feet, and Gothic or Chinese influences." },
-      { term: "Console Table",      letter: "C", definition: "A narrow table fixed against a wall or supported by brackets, used in entryways and hallways for decorative display." },
-      { term: "Credenza",           letter: "C", definition: "A low sideboard with doors and drawers, originally used to taste food for poison before serving nobility, now a storage piece in dining or living rooms." },
-      { term: "Claw-and-Ball Foot", letter: "C", definition: "A decorative furniture foot depicting a claw (or talon) grasping a ball, typical of Chippendale and Queen Anne styles." },
+      { term: "Chaise Lounge",          letter: "C", cat: "Seating",         def: "An elongated chair or sofa extension long enough to support the fully outstretched legs, allowing the sitter to recline. Often the add-on chaise section of an L-shape sofa configuration." },
+      { term: "Coffee Table",           letter: "C", cat: "Living Room",     def: "A low table placed in front of a sofa for holding drinks, books, remotes, and decorative objects. Available with tops in marble, sintered stone, tempered glass, solid wood, or engineered wood." },
+      { term: "Console Table",          letter: "C", cat: "Living Room",     def: "A narrow, long table placed against a wall — typically in an entryway or behind a sofa — used for decorative display, keys, or plants." },
+      { term: "Contemporary Style",     letter: "C", cat: "Design Style",    def: "A fluid aesthetic reflecting current design trends. In furniture, it typically means clean lines, neutral or warm tones, mixed materials (wood, metal, glass), and an uncluttered look." },
+      { term: "Custom Made",            letter: "C", cat: "Customisation",   def: "Furniture built to a customer's specific dimensions, configurations, colours, or material choices. Many sofas, wardrobes, and dining sets at X'clusive Home are available with customisation options." },
 
       // D
-      { term: "Davenport",          letter: "D", definition: "1) A large upholstered sofa; 2) A small writing desk with a hinged top and side drawers, popular in Victorian England." },
-      { term: "Daybed",             letter: "D", definition: "A piece of furniture that functions as both a sofa and a bed, featuring a reclining back and side rails." },
-      { term: "Demilune",           letter: "D", definition: "A half-moon or semicircular table, console, or cabinet, from the French for 'half moon.'" },
-      { term: "Distressing",        letter: "D", definition: "A finishing technique applied to furniture to simulate age and wear — including dents, scratches, and paint effects — giving a vintage appearance." },
-      { term: "Dovetail Joint",     letter: "D", definition: "A classic woodworking joint with interlocking trapezoidal cuts (resembling a dove's tail) that provides strong resistance to pulling apart, used in drawer construction." },
-      { term: "Drop-Leaf Table",    letter: "D", definition: "A table with one or more hinged sections (leaves) that can be folded down to reduce the table's size when not in use." },
+      { term: "Daybed",                 letter: "D", cat: "Multi-Function",  def: "A piece of furniture that serves as a sofa during the day and converts into a single bed at night. Ideal for guest rooms or studio apartments where space is limited." },
+      { term: "Dining Chair",           letter: "D", cat: "Dining",          def: "A chair designed specifically for use at a dining table, available in upholstered, bentwood, solid wood, metal, and rattan styles to suit different interior looks." },
+      { term: "Dining Table",           letter: "D", cat: "Dining",          def: "The primary table used for meals. Available in fixed or extendable sizes, with tops in marble, sintered stone, tempered glass, solid wood, or veneer-finish engineered wood." },
+      { term: "Divan Bed",              letter: "D", cat: "Bedroom",         def: "A bed base consisting of a fabric-covered box on short legs — often with built-in storage drawers — topped with a mattress. Common in Singapore homes for its space-saving under-bed storage." },
 
       // E
-      { term: "Etagere",            letter: "E", definition: "An open-shelved display unit used to show decorative objects, books, or plants, often with ornate brackets." },
-      { term: "Escutcheon",         letter: "E", definition: "A decorative plate or shield-shaped fitting surrounding a keyhole or used as a decorative accent on furniture hardware." },
-      { term: "Empire Style",       letter: "E", definition: "A neoclassical furniture style from early 19th-century France, characterized by bold geometric forms, Egyptian motifs, and rich materials like mahogany and gilded bronze." },
+      { term: "Engineered Wood",        letter: "E", cat: "Materials",       def: "Composite wood products (MDF, plywood, particleboard) made from wood fibres, chips, or veneers bonded with adhesive under pressure. Stable, consistent, and widely used in modern furniture at accessible price points." },
+      { term: "Extension Table",        letter: "E", cat: "Dining",          def: "A dining table with one or more extendable leaves (fold-out or butterfly insert) that increase the table length to seat more guests. Ideal for Singapore homes that need flexible entertaining space." },
 
       // F
-      { term: "Fauteuil",           letter: "F", definition: "A French open-armed upholstered armchair with padded armrests, originating in the 17th century and a staple of French court furniture." },
-      { term: "Finial",             letter: "F", definition: "A decorative ornamental detail at the top of a bedpost, cabinet, lamp, or curtain rod, often in the shape of a ball, urn, or carved motif." },
-      { term: "Footstool",          letter: "F", definition: "A small, low stool used to support the feet while seated, or as a step stool near tall furniture." },
-      { term: "French Polish",      letter: "F", definition: "A high-gloss wood finish achieved by applying many thin coats of shellac dissolved in alcohol, producing a deep, mirror-like sheen." },
+      { term: "Fabric Upholstery",      letter: "F", cat: "Materials",       def: "Soft woven textiles — including linen, velvet, chenille, bouclé, and performance fabric — used to cover sofas, chairs, and bed headboards. Offers wide colour variety and comfort, though generally requires more care than leather." },
+      { term: "Feature Wall",           letter: "F", cat: "Interior Design", def: "An accent wall designed as the focal point of a room, distinguished by a different material, texture, or colour — such as fluted wood panels, stone cladding, wallpaper, or a TV console surround." },
+      { term: "Footstool",              letter: "F", cat: "Seating",         def: "A small padded seat used for resting the feet while seated, or as extra occasional seating for guests. A flat-topped footstool can double as a coffee table with a tray placed on top." },
+      { term: "Full Leather",           letter: "F", cat: "Materials",       def: "Upholstery using genuine leather across all visible surfaces — the seat, back, sides, and armrests. The most premium and durable leather option, which develops a desirable patina with age." },
 
       // G
-      { term: "Gateleg Table",      letter: "G", definition: "A table with drop leaves supported by hinged legs that swing out like a gate, allowing the table to be expanded or folded flat for storage." },
-      { term: "Gilding",            letter: "G", definition: "The application of thin gold leaf or gold paint to surfaces to add a luxurious golden finish, widely used in baroque and rococo furniture." },
-      { term: "Grain",              letter: "G", definition: "The natural pattern of lines, texture, and fiber direction visible on the surface of cut wood, influencing both aesthetics and structural strength." },
+      { term: "Gas Lift",               letter: "G", cat: "Mechanisms",      def: "A hydraulic gas piston mechanism that allows a bed base or storage chest lid to be lifted easily with one hand and remain open without a support prop." },
+      { term: "Wood Grain",             letter: "G", cat: "Materials",       def: "The natural pattern of lines, fibres, and texture visible on a cut wood surface. Straight grain produces a uniform look; open grain (e.g., oak, ash) shows a more pronounced natural pattern." },
 
       // H
-      { term: "Hardwood",           letter: "H", definition: "Wood from broad-leaved (deciduous) trees such as oak, walnut, mahogany, and cherry. Generally denser and more durable than softwood, preferred for quality furniture." },
-      { term: "Highboy",            letter: "H", definition: "A tall chest of drawers in two stacked sections, the lower section often on cabriole legs, popular in 18th-century American colonial furniture." },
-      { term: "Hutch",              letter: "H", definition: "A two-part storage unit combining a lower cabinet or buffet with an upper open or glass-fronted shelving section, used in dining rooms." },
+      { term: "Half Leather",           letter: "H", cat: "Materials",       def: "A sofa upholstered in genuine leather on the high-contact areas — seat, back, and armrests — while less visible areas (sides, rear) use faux leather or fabric. A cost-effective leather alternative." },
+      { term: "Hardwood",               letter: "H", cat: "Materials",       def: "Dense, durable timber from slow-growing deciduous trees (oak, walnut, teak, rubberwood). Preferred for quality furniture due to its strength, longevity, and rich natural character." },
+      { term: "Headboard",              letter: "H", cat: "Bedroom",         def: "The decorative panel at the head of a bed frame, providing a visual anchor for the bedroom and back support when sitting up in bed. Available in upholstered fabric, leather, solid wood, and rattan styles." },
+      { term: "High Sleeper",           letter: "H", cat: "Bedroom",         def: "A raised single bed (also called a loft bed) elevated to create usable space underneath — for a desk, wardrobe, sofa, or storage unit. Popular in children's rooms and compact Singapore HDB spaces." },
 
       // I
-      { term: "Inlay",              letter: "I", definition: "A decorative technique where contrasting materials (different woods, metal, shell, bone) are set into recessed areas of a furniture surface to create patterns or images." },
-
-      // J
-      { term: "Japanning",          letter: "J", definition: "A European imitation of East Asian lacquer work, applying layers of black or colored varnish with gilded decoration, popular in 17th–18th century furniture." },
-      { term: "Joinery",            letter: "J", definition: "The craft of connecting pieces of wood using joints such as mortise-and-tenon, dovetail, or dowel joints, forming the structural framework of furniture." },
+      { term: "Industrial Style",       letter: "I", cat: "Design Style",    def: "An interior aesthetic inspired by factories and warehouses, featuring raw or exposed materials (metal frames, reclaimed wood, concrete finishes), neutral dark tones, and utilitarian forms." },
 
       // K
-      { term: "Klismos",            letter: "K", definition: "An ancient Greek chair form with a curved backrest (klismos rail) and outward-splaying saber legs, widely revived in neoclassical and Regency design." },
-      { term: "Knockdown Furniture", letter: "K", definition: "Furniture designed to be assembled and disassembled easily using hardware connectors, without tools or adhesives — common in flat-pack furniture." },
+      { term: "King-Size Bed",          letter: "K", cat: "Bedroom",         def: "A bed size measuring approximately 183cm × 190cm — the largest standard bed size, providing generous sleeping space for couples. Requires a larger bedroom to accommodate comfortably." },
+      { term: "Knockdown Furniture",    letter: "K", cat: "Construction",    def: "Flat-pack furniture designed for self-assembly and disassembly using cam locks, connector bolts, or dowels — without adhesive. Common for wardrobes, shelving units, and TV consoles for easy delivery and relocation." },
 
       // L
-      { term: "Lacquer",            letter: "L", definition: "A hard, glossy surface coating derived from the sap of the lacquer tree (or synthetic resins), applied in thin layers to protect and decorate furniture." },
-      { term: "Loveseat",           letter: "L", definition: "A small sofa designed for two people, also called a two-seater, ideal for smaller living spaces or as a companion piece to a larger sofa." },
+      { term: "Lacquer Finish",         letter: "L", cat: "Finishes",        def: "A hard, durable coating applied to furniture surfaces in a high-gloss or matte finish for protection and a clean, refined appearance. Common on wardrobe doors, TV consoles, and dining sideboards." },
+      { term: "Latex Mattress",         letter: "L", cat: "Bedroom",         def: "A mattress made from natural or synthetic latex foam, known for responsive, buoyant support, natural breathability, and resistance to dust mites and mould — a good option for Singapore's humidity." },
+      { term: "L-Shape Sofa",           letter: "L", cat: "Seating",         def: "A sectional sofa arranged in an 'L' configuration, with a main sofa body and a perpendicular chaise extension for the legs. Ideal for corner placement in medium-to-large living rooms." },
+      { term: "Loveseat",               letter: "L", cat: "Seating",         def: "A compact two-seater sofa designed for smaller spaces or as a secondary piece to complement a larger sofa in an open-plan living area." },
+      { term: "Luxury Style",           letter: "L", cat: "Design Style",    def: "A design aesthetic defined by high-quality materials (genuine leather, marble, solid brass hardware), rich tones, plush textures, and refined detailing — creating an opulent, elevated atmosphere." },
 
       // M
-      { term: "Marquetry",          letter: "M", definition: "A decorative veneer technique where pieces of thin wood (or other materials) are assembled like a puzzle to form intricate patterns, pictures, or floral designs on furniture surfaces." },
-      { term: "MCM (Mid-Century Modern)", letter: "M", definition: "A design movement from roughly 1945–1969 characterized by clean lines, organic shapes, minimal ornamentation, and the use of materials like molded plywood, fiberglass, and aluminum." },
-      { term: "Mortise and Tenon",  letter: "M", definition: "A classic carpentry joint where a projecting tongue (tenon) fits snugly into a corresponding hole (mortise) in another piece, creating a strong structural connection." },
+      { term: "Marble Top",             letter: "M", cat: "Materials",       def: "A furniture surface made from natural marble stone — typically used for dining tables and coffee tables. Prized for its luxurious veining and cool appearance, though it requires sealing and careful maintenance to avoid staining." },
+      { term: "MDF",                    letter: "M", cat: "Materials",       def: "Medium-Density Fibreboard — an engineered wood panel made from compressed wood fibres and resin binder. Smooth, easy to paint or veneer, and affordable; widely used in cabinet carcasses, TV consoles, and wardrobe interiors." },
+      { term: "Memory Foam",            letter: "M", cat: "Materials",       def: "A pressure-sensitive polyurethane foam that softens and conforms to body shape under heat and weight, then returns to its original form when pressure is removed. Used in mattresses and high-end seat cushions." },
+      { term: "Minimalist Style",       letter: "M", cat: "Design Style",    def: "A design philosophy centred on simplicity and function — only essential furniture, neutral or monochromatic colours, clean unadorned lines, and deliberate open space. One of the most popular interior styles in Singapore." },
+      { term: "Modular Sofa",           letter: "M", cat: "Seating",         def: "A sofa built from individual interchangeable sections (modules) that can be arranged, added to, or separated in different configurations to suit different room layouts or life stages." },
+      { term: "Multi-Function Furniture", letter: "M", cat: "Multi-Function", def: "Furniture that serves more than one purpose — such as a storage bed, sofa bed, nesting tables, or extendable dining table — designed to maximise utility and space efficiency in compact homes." },
 
       // N
-      { term: "Nailhead Trim",      letter: "N", definition: "Decorative upholstery hardware — individual or strip nail heads with domed or flat heads — used to outline and embellish upholstered furniture edges and seams." },
-      { term: "Nightstand",         letter: "N", definition: "A small bedside table used to hold a lamp, alarm clock, books, and other items within easy reach while in bed; also called a bedside table." },
+      { term: "Nailhead Trim",          letter: "N", cat: "Details",         def: "Decorative metal studs — in antique brass, chrome, bronze, or black finishes — applied in rows along the edges or seams of upholstered furniture to create a tailored, classic finishing detail." },
+      { term: "Nightstand",             letter: "N", cat: "Bedroom",         def: "A small bedside table positioned next to the bed for holding a lamp, phone, water, books, or alarm clock. Also referred to as a bedside table or bedside cabinet." },
 
       // O
-      { term: "Ormolu",             letter: "O", definition: "Gilded bronze or brass mounts and decorations applied to high-end French furniture, especially in the Louis XV and Louis XVI periods." },
-      { term: "Ottoman",            letter: "O", definition: "A padded, upholstered seat without a back or arms, used as a footrest, extra seating, or a coffee table surface." },
+      { term: "Open Door Wardrobe",     letter: "O", cat: "Storage",         def: "A wardrobe with traditional hinged doors that swing outward to open. Provides a full view of the interior contents but requires clear floor space in front to accommodate the door swing." },
+      { term: "Ottoman",                letter: "O", cat: "Seating",         def: "A padded, upholstered seat without a back or arms. Serves as a footrest in front of an armchair, extra casual seating, or — with a tray placed on top — an informal coffee table." },
 
       // P
-      { term: "Parsons Table",      letter: "P", definition: "A minimalist table characterized by legs that are the same width as the tabletop thickness, creating a clean, boxy silhouette — named after the Parsons School of Design." },
-      { term: "Patina",             letter: "P", definition: "A surface sheen, color change, or texture that develops on furniture over time through aging, use, and oxidation — often considered desirable in antiques." },
-      { term: "Pediment",           letter: "P", definition: "A decorative triangular or curved architectural element crowning the top of a cabinet, bookcase, or clock — borrowed from classical Greek and Roman architecture." },
-      { term: "Pembroke Table",     letter: "P", definition: "A small drop-leaf table with short leaves and a drawer, versatile enough for breakfast, writing, or as a side table." },
-      { term: "Plinth",             letter: "P", definition: "A flat, square base on which a piece of furniture, column, or decorative object stands." },
+      { term: "Patina",                 letter: "P", cat: "Finishes",        def: "The natural surface character — sheen, colour deepening, subtle texture variation — that develops on leather, solid wood, or metal furniture through regular use and aging. Considered a mark of quality in genuine leather and solid wood pieces." },
+      { term: "Platform Bed",           letter: "P", cat: "Bedroom",         def: "A low-profile bed with a solid, slatted, or upholstered base that supports the mattress directly — no box spring required. Its sleek, ground-hugging silhouette is a hallmark of contemporary and minimalist bedroom design." },
+      { term: "Plywood",                letter: "P", cat: "Materials",       def: "An engineered wood panel made from cross-laminated layers of wood veneer bonded with adhesive. Strong, resistant to warping and cracking, and commonly used in quality furniture frames, drawers, and backs." },
+      { term: "Pocket Spring",          letter: "P", cat: "Bedroom",         def: "Individual coil springs each encased in a separate fabric pocket within a mattress. Because each spring moves independently, pocket spring mattresses provide targeted body support and significantly reduce motion transfer between sleeping partners." },
+      { term: "PU Leather",             letter: "P", cat: "Materials",       def: "Polyurethane leather — a synthetic leather alternative with a consistent surface texture, available in many colours. More affordable than genuine leather and easier to clean, but less breathable and durable over the long term." },
 
       // Q
-      { term: "Queen Anne Style",   letter: "Q", definition: "An early 18th-century English furniture style featuring graceful cabriole legs, pad feet, shell carvings, and restrained curves — emphasizing elegance over heavy ornamentation." },
+      { term: "Queen-Size Bed",         letter: "Q", cat: "Bedroom",         def: "A bed size measuring approximately 153cm × 190cm — the most popular size in Singapore for couples. It offers a balance of generous sleeping space and practical room footprint for HDB and condo bedrooms." },
 
       // R
-      { term: "Rattan",             letter: "R", definition: "A flexible palm vine used in weaving furniture frames and surfaces; lightweight, durable, and popular in tropical and bohemian interior styles." },
-      { term: "Recliner",           letter: "R", definition: "An armchair or sofa with an adjustable back and extendable footrest, allowing the sitter to recline to various angles for comfort." },
-      { term: "Reclaimed Wood",     letter: "R", definition: "Lumber salvaged from old buildings, barns, or demolished structures and repurposed for furniture. Prized for its character, patina, and sustainable sourcing." },
+      { term: "Rattan",                 letter: "R", cat: "Materials",       def: "A natural climbing palm vine that is woven or bent into furniture frames, seat bases, and panels. Lightweight, flexible, and durably strong — a signature material in resort-style and bohemian-inspired interiors." },
+      { term: "Recliner",               letter: "R", cat: "Seating",         def: "An armchair or sofa with an adjustable backrest that tilts back and a built-in footrest that extends forward, allowing the user to recline to multiple positions for maximum comfort." },
+      { term: "Reclaimed Wood",         letter: "R", cat: "Materials",       def: "Timber salvaged from demolished buildings, old barns, or fallen trees and repurposed into new furniture. Valued for its unique character, worn textures, and sustainable sourcing story." },
+      { term: "Resort Style",           letter: "R", cat: "Design Style",    def: "An interior aesthetic inspired by tropical hotel resorts, featuring natural materials (rattan, teak, linen, jute), warm earthy tones, indoor plants, and a relaxed, airy atmosphere. Very suited to Singapore's tropical climate." },
 
       // S
-      { term: "Secretary Desk",     letter: "S", definition: "A writing desk with a hinged writing surface that folds out, combined with shelving or cabinet sections above and drawers below." },
-      { term: "Settee",             letter: "S", definition: "A small upholstered sofa or bench with a back and arms, designed for two or more people — lighter and less formal than a full sofa." },
-      { term: "Sideboard",          letter: "S", definition: "A long, low piece of dining room furniture used for storage and serving, typically with drawers, cupboards, and an open top surface." },
-      { term: "Slipcover",          letter: "S", definition: "A removable, washable fabric cover designed to fit over upholstered furniture to protect it or change its appearance." },
-      { term: "Sofa",               letter: "S", definition: "An upholstered seat with a back and arms, long enough for multiple people to sit on simultaneously; the centerpiece of most living rooms." },
-      { term: "Softwood",           letter: "S", definition: "Wood from coniferous (evergreen) trees such as pine, fir, and cedar. Generally lighter and less expensive than hardwood; used for painted furniture and structural framing." },
+      { term: "Scandinavian Style",     letter: "S", cat: "Design Style",    def: "A clean, functional design philosophy from Nordic countries, defined by light wood tones (birch, oak), white or soft neutral palettes, simple forms without ornamentation, and a focus on warmth and craftsmanship." },
+      { term: "Sectional Sofa",         letter: "S", cat: "Seating",         def: "A large sofa composed of multiple independent sections that connect to form an L-shape, U-shape, or custom open-plan configuration — ideal for open-concept living rooms." },
+      { term: "Sintered Stone",         letter: "S", cat: "Materials",       def: "An ultra-durable engineered surface created by compressing natural minerals (quartz, feldspar, silica) under extreme heat and pressure. Highly scratch-, stain-, and heat-resistant — an increasingly popular choice for dining and coffee table tops over marble." },
+      { term: "Sliding Door Wardrobe",  letter: "S", cat: "Storage",         def: "A wardrobe with doors that glide horizontally along top and bottom tracks, requiring no swing clearance. A practical space-saver in Singapore bedrooms where wall-to-wall or floor-to-ceiling wardrobe setups are common." },
+      { term: "Softwood",               letter: "S", cat: "Materials",       def: "Timber from faster-growing coniferous trees (pine, fir, rubber wood). Lighter and generally less expensive than hardwood; often used in painted furniture or secondary structural components." },
+      { term: "Sofa Bed",               letter: "S", cat: "Multi-Function",  def: "A sofa that converts into a sleeping surface by unfolding a hidden mattress mechanism. A practical guest accommodation solution for compact Singapore homes that cannot dedicate a separate guest room." },
+      { term: "Storage Bed",            letter: "S", cat: "Bedroom",         def: "A bed frame with built-in storage beneath the mattress — either as pull-out drawers along the sides, or a gas-lift base that opens to reveal a large hidden storage cavity. A popular solution for maximising space in Singapore bedrooms." },
 
       // T
-      { term: "Tambour",            letter: "T", definition: "A flexible sliding closure made of thin wooden slats glued to a canvas backing, used on roll-top desks and cabinet doors." },
-      { term: "Trestle Table",      letter: "T", definition: "A table with a flat top supported by two A-frame or sawhorse-style trestle bases, easily assembled and disassembled." },
-      { term: "Tufting",            letter: "T", definition: "An upholstery technique where buttons or stitches pull through the fabric and padding at regular intervals, creating a dimpled, patterned surface — common in Chesterfield sofas." },
-      { term: "Turnery",            letter: "T", definition: "The craft of shaping wood on a lathe to create decorative round or symmetrical elements such as legs, spindles, and balusters." },
+      { term: "Tempered Glass",         letter: "T", cat: "Materials",       def: "Heat-treated safety glass that is 4–5× stronger than standard glass. When broken, it shatters into small, rounded granular pieces rather than dangerous shards. Used for table tops, cabinet glass doors, and TV console panels." },
+      { term: "Tufting",                letter: "T", cat: "Details",         def: "An upholstery technique where buttons, thread, or knots pull through foam and fabric at regular intervals, creating a distinctive dimpled, geometric diamond or square pattern on the surface. Commonly seen on Chesterfield sofas and padded headboards." },
+      { term: "TV Console",             letter: "T", cat: "Living Room",     def: "A low media unit designed to support a television and organise entertainment equipment, with compartments, drawers, or open shelving for set-top boxes, gaming consoles, and cable management." },
 
       // U
-      { term: "Upholstery",         letter: "U", definition: "The craft and materials — fabric, foam, padding, springs, and webbing — used to cover and cushion seats, backs, and arms of furniture." },
+      { term: "Upholstered Bed",        letter: "U", cat: "Bedroom",         def: "A bed frame wrapped in fabric or leather upholstery, offering a soft, padded aesthetic. The headboard is typically the main upholstered feature, though the side rails and footboard may also be covered for a fully padded look." },
+      { term: "Upholstery",             letter: "U", cat: "Construction",    def: "The craft and materials — fabric, leather, foam padding, springs, and webbing — used to cushion and cover seating surfaces on sofas, armchairs, dining chairs, and bed headboards." },
 
       // V
-      { term: "Veneer",             letter: "V", definition: "A thin slice of attractive wood (or other material) bonded over a less expensive substrate to create the appearance of solid wood with greater stability and visual appeal." },
-      { term: "Victorian Style",    letter: "V", definition: "A 19th-century design era (during Queen Victoria's reign) noted for heavy ornamentation, dark woods like mahogany and walnut, tufted upholstery, and eclectic historical motifs." },
+      { term: "Velvet",                 letter: "V", cat: "Materials",       def: "A luxuriously soft woven fabric with a distinctive dense pile that catches and reflects light, giving it a rich depth of colour. Increasingly popular as a statement upholstery for sofas and accent chairs." },
+      { term: "Veneer",                 letter: "V", cat: "Materials",       def: "A thin slice of real wood (typically 0.5–3mm thick) bonded over a less expensive substrate such as MDF or plywood. Provides the visual warmth and grain pattern of solid wood at a lower cost, with improved dimensional stability." },
 
       // W
-      { term: "Wainscoting",        letter: "W", definition: "Decorative wood paneling applied to the lower portion of interior walls, typically paired with furniture for a coordinated, classic look." },
-      { term: "Windsor Chair",      letter: "W", definition: "A spindle-back wooden chair with a solid saddle seat and splayed legs, originating in 18th-century England — one of the most enduring chair designs in history." },
-      { term: "Writing Desk",       letter: "W", definition: "A flat-surfaced desk designed primarily for writing, often with small drawers or compartments for storing stationery." },
-
-      // X
-      { term: "X-Base",             letter: "X", definition: "A furniture base or stool support shaped like an X when viewed from the side, derived from the Roman curule chair and popular in neoclassical and Empire styles." },
-
-      // Y
-      { term: "Yoke Back",          letter: "Y", definition: "A chair back splat shaped like a curved yoke (the crosspiece on a harness), characteristic of Chinese Chippendale and Queen Anne chairs." },
-
-      // Z
-      { term: "Zeitgeist",          letter: "Z", definition: "In interior design, the 'spirit of the time' — the prevailing aesthetic sensibility of an era that influences furniture styles, color palettes, and decor trends." },
+      { term: "Walk-in Wardrobe",       letter: "W", cat: "Storage",         def: "A dedicated room or large alcove fitted with hanging rails, shelves, drawers, shoe racks, and sometimes a central island unit — the ultimate clothing storage solution, increasingly common in Singapore condo master bedrooms." },
+      { term: "Wardrobe System",        letter: "W", cat: "Storage",         def: "A modular, configurable storage system assembled from individual units (drawers, open shelves, hanging sections, mirrors, glass doors) to create a bespoke wardrobe tailored to the room dimensions and storage requirements." },
+      { term: "Wenge",                  letter: "W", cat: "Materials",       def: "A dark chocolate-brown tropical hardwood with a strong straight grain and naturally fine texture. Popular in contemporary and luxury furniture for its striking appearance and durability." },
     ];
 
-    // ─── Build UI ────────────────────────────────────────────────────
-    const letters = [...new Set(glossaryData.map(d => d.letter))].sort();
-    const container = document.getElementById('glossary-container');
-    const azNav    = document.getElementById('az-nav');
+    // ── Build Page ────────────────────────────────────────────
+    const letters  = [...new Set(glossaryData.map(d => d.letter))].sort();
+    const cats     = new Set(glossaryData.map(d => d.cat));
+    document.getElementById('stat-terms').textContent = glossaryData.length;
+    document.getElementById('stat-cats').textContent  = cats.size;
+
+    const container   = document.getElementById('glossary-container');
+    const azNav       = document.getElementById('az-nav');
     const searchInput = document.getElementById('search-input');
     const noResults   = document.getElementById('no-results');
-    const noResultsQ  = document.getElementById('no-results-query');
+    const noResultsQ  = document.getElementById('no-results-q');
 
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Build A-Z nav buttons
+    // A-Z buttons
     letters.forEach(letter => {
       const btn = document.createElement('a');
-      btn.href = `#letter-${letter}`;
+      btn.href        = `#letter-${letter}`;
       btn.textContent = letter;
       btn.dataset.letter = letter;
-      btn.className = 'az-btn w-8 h-8 flex items-center justify-center rounded font-semibold text-sm border border-nova-200 text-nova-700 bg-white hover:bg-nova-600 hover:text-white hover:border-nova-600 transition-colors';
+      btn.className   = 'az-btn';
       azNav.appendChild(btn);
     });
 
-    // Build letter groups
+    // Letter sections
     letters.forEach(letter => {
-      const group = document.createElement('section');
-      group.id = `letter-${letter}`;
-      group.dataset.letter = letter;
-      group.className = 'letter-group letter-anchor';
+      const terms   = glossaryData.filter(d => d.letter === letter);
+      const section = document.createElement('section');
+      section.id            = `letter-${letter}`;
+      section.dataset.letter = letter;
+      section.className     = 'letter-group';
 
-      // Letter heading
-      const heading = document.createElement('div');
-      heading.className = 'flex items-center gap-3 mb-4';
-      heading.innerHTML = `
-        <span class="w-11 h-11 flex items-center justify-center rounded-full bg-nova-700 text-white text-xl font-serif font-bold shadow">${letter}</span>
-        <div class="flex-1 h-px bg-nova-200"></div>
+      // Heading row
+      const hd = document.createElement('div');
+      hd.className = 'letter-heading';
+      hd.innerHTML = `
+        <span class="letter-char">${letter}</span>
+        <div class="letter-rule"></div>
+        <span class="letter-tally">${terms.length} ${terms.length === 1 ? 'term' : 'terms'}</span>
       `;
-      group.appendChild(heading);
+      section.appendChild(hd);
 
-      // Terms grid
+      // Cards grid
       const grid = document.createElement('div');
-      grid.className = 'grid gap-4 sm:grid-cols-2';
+      grid.className = 'terms-grid';
 
-      const terms = glossaryData.filter(d => d.letter === letter);
       terms.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'term-item bg-white rounded-xl border border-nova-100 p-5 shadow-sm hover:shadow-md hover:border-nova-300 transition-all';
-        card.dataset.term = item.term.toLowerCase();
-        card.dataset.definition = item.definition.toLowerCase();
+        card.className       = 'term-card';
+        card.dataset.term    = item.term.toLowerCase();
+        card.dataset.def     = item.def.toLowerCase();
         card.innerHTML = `
-          <h3 class="font-serif font-semibold text-nova-800 text-lg mb-1 leading-tight">${item.term}</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">${item.definition}</p>
+          <span class="term-tag">${item.cat}</span>
+          <h3 class="term-name">${item.term}</h3>
+          <p class="term-def">${item.def}</p>
         `;
         grid.appendChild(card);
       });
 
-      group.appendChild(grid);
-      container.appendChild(group);
+      section.appendChild(grid);
+      container.appendChild(section);
     });
 
-    // ─── Search ──────────────────────────────────────────────────────
+    // ── Live Search ───────────────────────────────────────────
     searchInput.addEventListener('input', () => {
-      const query = searchInput.value.trim().toLowerCase();
+      const q = searchInput.value.trim().toLowerCase();
 
-      if (!query) {
-        // Show everything
+      if (!q) {
         document.querySelectorAll('.letter-group').forEach(g => g.classList.remove('hidden'));
-        document.querySelectorAll('.term-item').forEach(t => t.classList.remove('hidden'));
-        document.querySelectorAll('.az-btn').forEach(b => b.classList.remove('opacity-30'));
+        document.querySelectorAll('.term-card').forEach(c => c.classList.remove('hidden'));
+        document.querySelectorAll('.az-btn').forEach(b => b.classList.remove('dimmed'));
         noResults.classList.remove('visible');
+        container.style.display = '';
         return;
       }
 
-      let anyVisible = false;
-      const visibleLetters = new Set();
+      let anyVisible    = false;
+      const visible     = new Set();
 
       document.querySelectorAll('.letter-group').forEach(group => {
-        let groupHasVisible = false;
-        group.querySelectorAll('.term-item').forEach(card => {
-          const matches = card.dataset.term.includes(query) || card.dataset.definition.includes(query);
-          card.classList.toggle('hidden', !matches);
-          if (matches) { groupHasVisible = true; anyVisible = true; }
+        let groupHit = false;
+        group.querySelectorAll('.term-card').forEach(card => {
+          const hit = card.dataset.term.includes(q) || card.dataset.def.includes(q);
+          card.classList.toggle('hidden', !hit);
+          if (hit) { groupHit = true; anyVisible = true; }
         });
-        group.classList.toggle('hidden', !groupHasVisible);
-        if (groupHasVisible) visibleLetters.add(group.dataset.letter);
+        group.classList.toggle('hidden', !groupHit);
+        if (groupHit) visible.add(group.dataset.letter);
       });
 
-      // Dim A-Z nav buttons with no results
       document.querySelectorAll('.az-btn').forEach(btn => {
-        btn.classList.toggle('opacity-30', !visibleLetters.has(btn.dataset.letter));
+        btn.classList.toggle('dimmed', !visible.has(btn.dataset.letter));
       });
 
       noResultsQ.textContent = searchInput.value.trim();
       noResults.classList.toggle('visible', !anyVisible);
+      container.style.display = anyVisible ? '' : 'none';
     });
   </script>
 </body>
