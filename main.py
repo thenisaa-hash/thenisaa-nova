@@ -59,22 +59,6 @@ def main():
     print("\nSTEP 2: Enhancing images via Higgsfield...")
     print("-" * 40)
 
-    # Check credentials
-    email = os.getenv("HIGGSFIELD_EMAIL")
-    password = os.getenv("HIGGSFIELD_PASSWORD")
-
-    if not email or not password:
-        print("ERROR: Missing Higgsfield credentials!")
-        print()
-        print("Please do the following:")
-        print("  1. Copy .env.example to .env:")
-        print("       cp .env.example .env")
-        print("  2. Edit .env and fill in:")
-        print("       HIGGSFIELD_EMAIL=your_email@example.com")
-        print("       HIGGSFIELD_PASSWORD=your_password")
-        print()
-        sys.exit(1)
-
     from higgsfield_automation import main as enhance_main
 
     results = enhance_main(image_paths)

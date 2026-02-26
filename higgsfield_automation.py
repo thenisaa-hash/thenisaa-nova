@@ -45,17 +45,11 @@ LOGIN_URL = f"{HIGGSFIELD_URL}/login"
 class HighgsfieldAutomation:
     def __init__(
         self,
-        email: str,
-        password: str,
         output_dir: str = "output_images",
-        headless: bool = False,
         slow_mo: int = 100,
     ):
-        self.email = email
-        self.password = password
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        self.headless = headless
         self.slow_mo = slow_mo
 
     def _wait_and_click(self, page: Page, selector: str, timeout: int = 30000):
@@ -64,69 +58,26 @@ class HighgsfieldAutomation:
         page.click(selector)
 
     def _login(self, page: Page):
-        """Log in to Higgsfield."""
-        print("Navigating to login page...")
+        """Open Higgsfield and wait for the user to log in manually."""
+        print("Opening Higgsfield login page...")
         page.goto(LOGIN_URL, wait_until="networkidle")
         time.sleep(2)
 
-        print("Logging in...")
-
-        # Try common email input selectors
-        email_selectors = [
-            'input[type="email"]',
-            'input[name="email"]',
-            'input[placeholder*="email" i]',
-            'input[placeholder*="Email" i]',
-            "#email",
-        ]
-        for selector in email_selectors:
-            try:
-                page.wait_for_selector(selector, timeout=5000)
-                page.fill(selector, self.email)
-                print(f"Filled email using: {selector}")
-                break
-            except PlaywrightTimeout:
-                continue
-
-        # Try common password input selectors
-        password_selectors = [
-            'input[type="password"]',
-            'input[name="password"]',
-            'input[placeholder*="password" i]',
-            "#password",
-        ]
-        for selector in password_selectors:
-            try:
-                page.wait_for_selector(selector, timeout=5000)
-                page.fill(selector, self.password)
-                print(f"Filled password using: {selector}")
-                break
-            except PlaywrightTimeout:
-                continue
-
-        # Click login/submit button
-        submit_selectors = [
-            'button[type="submit"]',
-            'button:has-text("Log in")',
-            'button:has-text("Login")',
-            'button:has-text("Sign in")',
-            'button:has-text("Continue")',
-            'input[type="submit"]',
-        ]
-        for selector in submit_selectors:
-            try:
-                page.wait_for_selector(selector, timeout=5000)
-                page.click(selector)
-                print(f"Clicked login button: {selector}")
-                break
-            except PlaywrightTimeout:
-                continue
-
-        # Wait for successful login (dashboard/home page)
-        print("Waiting for login to complete...")
-        page.wait_for_url(lambda url: "/login" not in url, timeout=30000)
-        time.sleep(3)
-        print("Logged in successfully!")
+        print()
+        print("=" * 60)
+        print("  ACTION REQUIRED - Please log in to Higgsfield")
+        print("=" * 60)
+        print()
+        print("  1. Look at the browser window that just opened")
+        print("  2. Click 'Sign in with Google'")
+        print("  3. Choose your Google account and complete login")
+        print("  4. Once you are inside the Higgsfield dashboard,")
+        print("     come back here and press ENTER to continue.")
+        print()
+        input("  Press ENTER after you have logged in >>> ")
+        print()
+        print("Continuing automation...")
+        time.sleep(2)
 
     def _navigate_to_image_tool(self, page: Page):
         """Navigate to the image creation/editing tool."""
@@ -484,7 +435,7 @@ class HighgsfieldAutomation:
 
         with sync_playwright() as p:
             browser = p.chromium.launch(
-                headless=self.headless,
+                headless=False,
                 slow_mo=self.slow_mo,
                 args=["--no-sandbox", "--disable-setuid-sandbox"],
             )
@@ -529,17 +480,7 @@ class HighgsfieldAutomation:
 
 def main(image_paths: list[str] | None = None):
     """Run the Higgsfield automation."""
-    email = os.getenv("HIGGSFIELD_EMAIL")
-    password = os.getenv("HIGGSFIELD_PASSWORD")
-
-    if not email or not password:
-        print("ERROR: HIGGSFIELD_EMAIL and HIGGSFIELD_PASSWORD must be set in .env file")
-        print("Copy .env.example to .env and fill in your credentials")
-        return None
-
     output_dir = os.getenv("OUTPUT_IMAGES_DIR", "output_images")
-    headless_env = os.getenv("HEADLESS", "false").lower()
-    headless = headless_env in ("true", "1", "yes")
     slow_mo = int(os.getenv("SLOW_MO", "100"))
 
     if not image_paths:
@@ -565,10 +506,7 @@ def main(image_paths: list[str] | None = None):
     print(f"Found {len(image_paths)} image(s) to process")
 
     automation = HighgsfieldAutomation(
-        email=email,
-        password=password,
         output_dir=output_dir,
-        headless=headless,
         slow_mo=slow_mo,
     )
 
