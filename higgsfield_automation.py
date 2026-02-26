@@ -38,8 +38,9 @@ Ultra-sharp focus, clean edges, accurate material texture, realistic depth and c
 
 Format: Square Resolution: 1080 × 1080 px"""
 
-HIGGSFIELD_URL = "https://app.higgsfield.ai"
+HIGGSFIELD_URL = "https://higgsfield.ai"
 LOGIN_URL = f"{HIGGSFIELD_URL}/login"
+IMAGE_TOOL_URL = f"{HIGGSFIELD_URL}/image"
 
 
 class HighgsfieldAutomation:
@@ -80,45 +81,11 @@ class HighgsfieldAutomation:
         time.sleep(2)
 
     def _navigate_to_image_tool(self, page: Page):
-        """Navigate to the image creation/editing tool."""
-        print("Navigating to image enhancement tool...")
-
-        # Try to find image creation tool in navigation
-        nav_selectors = [
-            'a[href*="image"]',
-            'a[href*="create"]',
-            'button:has-text("Create")',
-            'a:has-text("Image")',
-            '[data-testid*="image"]',
-            'a[href*="generate"]',
-        ]
-
-        for selector in nav_selectors:
-            try:
-                elements = page.query_selector_all(selector)
-                if elements:
-                    elements[0].click()
-                    print(f"Navigated using: {selector}")
-                    time.sleep(2)
-                    return
-            except Exception:
-                continue
-
-        # Try direct URL navigation to image creation
-        image_urls = [
-            f"{HIGGSFIELD_URL}/image",
-            f"{HIGGSFIELD_URL}/create",
-            f"{HIGGSFIELD_URL}/generate",
-            f"{HIGGSFIELD_URL}/studio",
-        ]
-        for url in image_urls:
-            try:
-                page.goto(url, wait_until="networkidle", timeout=10000)
-                time.sleep(2)
-                print(f"Navigated to: {url}")
-                return
-            except Exception:
-                continue
+        """Navigate to the Higgsfield Image tool."""
+        print("Navigating to Image tool...")
+        page.goto(IMAGE_TOOL_URL, wait_until="networkidle", timeout=30000)
+        time.sleep(3)
+        print(f"Navigated to: {IMAGE_TOOL_URL}")
 
     def _upload_image(self, page: Page, image_path: str):
         """Upload the reference image."""
