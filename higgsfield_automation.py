@@ -61,8 +61,8 @@ class HighgsfieldAutomation:
     def _login(self, page: Page):
         """Open Higgsfield and wait for the user to log in manually."""
         print("Opening Higgsfield login page...")
-        page.goto(LOGIN_URL, wait_until="networkidle")
-        time.sleep(2)
+        page.goto(LOGIN_URL, wait_until="domcontentloaded", timeout=60000)
+        time.sleep(4)
 
         print()
         print("=" * 60)
@@ -83,7 +83,7 @@ class HighgsfieldAutomation:
     def _navigate_to_image_tool(self, page: Page):
         """Navigate to the Higgsfield Image tool."""
         print("Navigating to Image tool...")
-        page.goto(IMAGE_TOOL_URL, wait_until="networkidle", timeout=30000)
+        page.goto(IMAGE_TOOL_URL, wait_until="domcontentloaded", timeout=60000)
         time.sleep(3)
         print(f"Navigated to: {IMAGE_TOOL_URL}")
 
