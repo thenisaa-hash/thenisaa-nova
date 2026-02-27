@@ -60,7 +60,28 @@ class HighgsfieldAutomation:
 
     def _login(self, page: Page):
         """Open Higgsfield and wait for the user to log in manually."""
-        print("Opening Higgsfield login page...")
+        print("Opening Higgsfield...")
+        page.goto(HIGGSFIELD_URL, wait_until="domcontentloaded", timeout=60000)
+        time.sleep(4)
+
+        # Check if already logged in (session saved from previous run)
+        current_url = page.url
+        page_text = page.inner_text("body") if self._is_page_alive(page) else ""
+
+        already_logged_in = (
+            "login" not in current_url.lower()
+            and any(
+                keyword in page_text.lower()
+                for keyword in ["dashboard", "create", "workspace", "generate", "image"]
+            )
+        )
+
+        if already_logged_in:
+            print("Already logged in from previous session!")
+            time.sleep(2)
+            return
+
+        # Need to log in
         page.goto(LOGIN_URL, wait_until="domcontentloaded", timeout=60000)
         time.sleep(4)
 
@@ -71,9 +92,14 @@ class HighgsfieldAutomation:
         print()
         print("  1. Look at the browser window that just opened")
         print("  2. Click 'Sign in with Google'")
-        print("  3. Choose your Google account and complete login")
-        print("  4. Once you are inside the Higgsfield dashboard,")
+        print("  3. If Google account picker doesn't show, type your")
+        print("     email address manually and click Next")
+        print("  4. Enter your password and complete login")
+        print("  5. Once you are inside the Higgsfield dashboard,")
         print("     come back here and press ENTER to continue.")
+        print()
+        print("  NOTE: DO NOT close the browser window!")
+        print("  Your login will be saved for future runs.")
         print()
         input("  Press ENTER after you have logged in >>> ")
         print()
@@ -388,6 +414,14 @@ class HighgsfieldAutomation:
             print(f"Error processing {image_name}: {e}")
             return None
 
+    def _is_page_alive(self, page: Page) -> bool:
+        """Check if the browser page is still open and responsive."""
+        try:
+            page.title()
+            return True
+        except Exception:
+            return False
+
     def run(self, image_paths: list[str]) -> dict[str, str | None]:
         """
         Run the enhancement automation for all images.
@@ -400,14 +434,16 @@ class HighgsfieldAutomation:
         """
         results = {}
 
+        # Use a persistent user data directory so Google login is saved between runs
+        user_data_dir = str(Path.home() / ".higgsfield_browser_session")
+        Path(user_data_dir).mkdir(parents=True, exist_ok=True)
+
         with sync_playwright() as p:
-            browser = p.chromium.launch(
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=user_data_dir,
                 headless=False,
                 slow_mo=self.slow_mo,
                 args=["--no-sandbox", "--disable-setuid-sandbox"],
-            )
-
-            context = browser.new_context(
                 viewport={"width": 1920, "height": 1080},
                 user_agent=(
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -419,11 +455,17 @@ class HighgsfieldAutomation:
             page = context.new_page()
 
             try:
-                # Login once
+                # Login once (will be skipped automatically on future runs if session is saved)
                 self._login(page)
 
                 # Process each image
                 for i, image_path in enumerate(image_paths, 1):
+                    # Check if browser is still open before each image
+                    if not self._is_page_alive(page):
+                        print("\nERROR: Browser was closed. Stopping automation.")
+                        print("Please run the script again and keep the browser open.")
+                        break
+
                     print(f"\nProcessing image {i}/{len(image_paths)}: {image_path}")
                     result = self.enhance_image(image_path, page)
                     results[image_path] = result
@@ -433,14 +475,17 @@ class HighgsfieldAutomation:
                 print(f"Fatal error during automation: {e}")
                 # Take screenshot for debugging
                 try:
-                    page.screenshot(path="debug_screenshot.png")
-                    print("Debug screenshot saved to: debug_screenshot.png")
+                    if self._is_page_alive(page):
+                        page.screenshot(path="debug_screenshot.png")
+                        print("Debug screenshot saved to: debug_screenshot.png")
                 except Exception:
                     pass
 
             finally:
-                context.close()
-                browser.close()
+                try:
+                    context.close()
+                except Exception:
+                    pass
 
         return results
 
